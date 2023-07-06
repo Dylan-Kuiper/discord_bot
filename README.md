@@ -1,2 +1,2 @@
 # discord_bot
-my first discord bbot
+my first discord bot
