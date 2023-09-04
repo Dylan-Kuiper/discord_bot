@@ -1,5 +1,7 @@
 require('dotenv').config();
-const { REST, Routes } = require('discord.js');
+const { Client, GatewayIntentBits, REST, Routes } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
+const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 const commands = [
   {
@@ -10,9 +12,49 @@ const commands = [
     name: 'ping',
     description: 'Pong!',
   },
+  {
+    name: 'setnotification',
+    description: 'Set a notification with a specific date and time.',
+    options: [
+      {
+        name: 'day',
+        type: 4,
+        description: 'Day of the notification (1-31)',
+        required: true,
+      },
+      {
+        name: 'month',
+        type: 4,
+        description: 'Month of the notification (1-12)',
+        required: true,
+      },
+      {
+        name: 'year',
+        type: 4,
+        description: 'Year of the notification',
+        required: true,
+      },
+      {
+        name: 'hour',
+        type: 4,
+        description: 'Hour of the notification (0-23)',
+        required: true,
+      },
+      {
+        name: 'minute',
+        type: 4,
+        description: 'Minute of the notification (0-59)',
+        required: true,
+      },
+      {
+        name: 'message',
+        type: 3,
+        description: 'Custom message for the notification',
+        required: true,
+      },
+    ],
+  },
 ];
-
-const rest = new REST({ version: '10' }).setToken(process.env.TOKEN);
 
 (async () => {
   try {
